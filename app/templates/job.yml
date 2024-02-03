@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: external-training
+  labels:
+    et/project-id: ""
+    et/data-hash: ""
+spec:
+  template:
+    metadata:
+      labels:
+        et/project-id: ""
+        et/data-hash: ""
+    spec:
+      containers:
+        - name: train
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsUser: 1001
+          workingDir: /app
+          command: ["python3", "/train/train.py"]
+          env: []
+          envFrom:
+            - secretRef:
+                name: bet-s3-secret
+          volumeMounts:
+            - name: train
+              mountPath: /train
+          resources:
+            limits:
+              cpu: "4"
+              memory: 10Gi
+            requests:
+              cpu: 500m
+              memory: 10Gi
+      volumes:
+        - name: train
+          configMap:
+            name: train-cm
+            items:
+              - key: train_py
+                path: train.py
+                mode: 0555
+      restartPolicy: Never
+      imagePullSecrets:
+        - name: bet-regcred
+      # nodeName:
+  backoffLimit: 0
+

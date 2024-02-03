@@ -1,0 +1,25 @@
+name: Create Tag on Master Merge
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  create_tag:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Read version from file
+      id: version
+      run: echo "version=$(cat version)" >> $GITHUB_OUTPUT
+
+    - name: Create tag
+      uses: rickstaa/action-create-tag@v1
+      id: "tag_create"
+      with:
+        tag: ${{ steps.version.outputs.version }}
+        force_push_tag: true

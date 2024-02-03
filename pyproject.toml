@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "botfront-external-training"
+version = "0.1.0"
+description = ""
+authors = ["Anton Grechkin <nanoeti@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.100.1"
+kubernetes = "^27.2.0"
+python-multipart = "^0.0.6"
+uvicorn = "^0.23.2"
+boto3 = "^1.28.20"
+pyyaml = "^6.0.1"
+
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.4.1"
+black = "^23.7.0"
+types-pyyaml = "^6.0.12.11"
+ruamel-yaml = "^0.18.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,9 @@
+*
+
+!/app
+!/pyproject.toml
+!/poetry.lock
+
+**/__pycache__/
+**/.mypy_cache/
+/app/config/kube
